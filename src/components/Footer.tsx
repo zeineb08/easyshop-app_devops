@@ -33,7 +33,7 @@ const Footer = () => {
           <div>
             <Logo />
             <div className="dark:text-gray-400">
-              <p className="mt-6">Tunis, Tunisia</p>
+              <p className="mt-6">Sousse, Tunisia</p>
 
               <a href="mailto:iemafzalhassan@gmail.com" className="block mt-3">
                 iemafzalhassan@gmail.com

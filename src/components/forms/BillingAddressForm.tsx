@@ -38,7 +38,7 @@ const BillingAddressForm = ({ onFormDataChange }: BillingAddressFormProps) => {
       phone: "+91 9499004395",
       country: "Tunisia",
       city: "Muzaffarpur",
-      state: "Tunis",
+      state: "Sousse",
       zip: "840000",
       streetAddress: "12/43 Kidd Avenue",
     },
