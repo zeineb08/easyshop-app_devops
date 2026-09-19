@@ -4,6 +4,7 @@ import { getTokenFromRequest, isAuthenticated } from "./lib/auth/utils";
 
 export async function middleware(request: NextRequest) {
   // Get token and check auth status
+  
   const token = getTokenFromRequest(request);
   const isAuth = token ? await isAuthenticated(request) : null;
   
