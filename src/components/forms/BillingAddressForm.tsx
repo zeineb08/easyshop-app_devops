@@ -36,9 +36,9 @@ const BillingAddressForm = ({ onFormDataChange }: BillingAddressFormProps) => {
     defaultValues: {
       title: "Afzal Hassan",
       phone: "+91 9499004395",
-      country: "India",
+      country: "Tunisia",
       city: "Muzaffarpur",
-      state: "Bihar",
+      state: "Tunis",
       zip: "840000",
       streetAddress: "12/43 Kidd Avenue",
     },

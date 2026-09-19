@@ -19,7 +19,7 @@ const ContactPage = () => {
           <div>
             <h4 className="font-semibold mb-1">Address</h4>
             <p className="text-sm text-muted-foreground">
-              Bihar, India
+              Tunis, Tunisia
             </p>
           </div>
 

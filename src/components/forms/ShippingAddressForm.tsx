@@ -39,7 +39,7 @@ const ShippingAddressForm = ({ onFormDataChange }: ShippingAddressFormProps) => 
       streetAddress: "House 1, Street 1",
       city: "Muzaffarpur",
       state: "Bihar",
-      country: "India",
+      country: "Tunisia",
       zip: "840000",
     },
   });
