@@ -4,7 +4,7 @@ metadata:
   name: db-migration
   namespace: easyshop
 spec:
-  ttlSecondsAfterFinished: 3600
+  ttlSecondsAfterFinished: 60
   template:
     spec:
       containers:
