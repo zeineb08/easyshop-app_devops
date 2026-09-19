@@ -6,7 +6,7 @@ metadata:
   annotations:
     alb.ingress.kubernetes.io/group.name: easyshop-app-lb
     alb.ingress.kubernetes.io/scheme: internet-facing
-    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:876997124628:certificate/3fcfd586-3638-4997-9073-95d43d155430
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:943818143874:certificate/09f9a0b9-d7dd-42f8-bc3f-8444cc3120f0
     alb.ingress.kubernetes.io/target-type: ip
     alb.ingress.kubernetes.io/backend-protocol: HTTP
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTP":80}, {"HTTPS":443}]'
@@ -14,7 +14,7 @@ metadata:
     kubernetes.io/ingress.class: alb
 spec:
   rules:
-  - host: easyshop.devopsdock.site
+  - host: easyshop.fitness-log.me
     http:
       paths:
       - path: /
