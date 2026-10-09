@@ -1,6 +1,6 @@
 "use client";
 
-import { createCookies } from "@/app/actions";
+
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -17,7 +17,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { Dispatch, SetStateAction, useState } from "react";
 import { useForm } from "react-hook-form";
-import { FcGoogle } from "react-icons/fc";
+
 import { LuLoader } from "react-icons/lu";
 import { useDispatch } from "react-redux";
 import { z } from "zod";
@@ -58,9 +58,6 @@ const SignupForm = ({ setIsOpen }: SignupFormProps) => {
       console.log('Registration response:', res.data);
 
       if (res.data.token) {
-        // First set the cookie
-        await createCookies(res.data.token);
-        
         // Then update the auth state
         dispatch(setAuthenticated(true));
         dispatch(setCurrentUser(res.data.user));
@@ -172,20 +169,6 @@ const SignupForm = ({ setIsOpen }: SignupFormProps) => {
           )}
         </Button>
 
-        <div className="flex gap-3 items-center justify-center my-3">
-          <div className="flex-1 h-0.5 bg-muted"></div>
-          <p className="text-muted">Or</p>
-          <div className="flex-1 h-0.5 bg-muted"></div>
-        </div>
-        <Button
-          type="button"
-          className="w-full h-12 flex gap-4 bg-gray-900 border-input hover:text-white hover:bg-gray-800"
-        >
-          <span className="text-3xl">
-            <FcGoogle />
-          </span>
-          <span>Signup with google</span>
-        </Button>
       </form>
     </Form>
   );

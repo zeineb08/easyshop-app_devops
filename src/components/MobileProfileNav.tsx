@@ -10,6 +10,7 @@ import { CgProfile } from "react-icons/cg";
 import { FaHeart } from "react-icons/fa";
 import { HiOutlineXMark } from "react-icons/hi2";
 import { IoBagCheckOutline, IoLogOut } from "react-icons/io5";
+import { FiShield } from "react-icons/fi";
 import { useDispatch } from "react-redux";
 import Modal from "./Modal";
 import { Button } from "./ui/button";
@@ -99,6 +100,7 @@ const MobileProfileNav = () => {
   const pathname = usePathname();
   const dispatch = useDispatch();
   const { isProfileNavOpen } = useAppSelector((state) => state.sidebarSlice);
+  const { currentUser } = useAppSelector((state) => state.authSlice);
 
   const handleLogout = () => {
     dispatch(removeCurrentUser());
@@ -126,7 +128,13 @@ const MobileProfileNav = () => {
               className="sm:max-w-[300px] bg-secondary px-5 pb-7 top-0 z-20 relative overflow-auto h-full w-full"
             >
               <div className="header flex justify-between items-center py-5 border-b border-input">
-                <Logo />
+                <Link
+                  href="/"
+                  className="flex items-center"
+                  onClick={() => dispatch(toggleProfileNav())}
+                >
+                  <Logo />
+                </Link>
 
                 <button
                   type="button"
@@ -138,6 +146,19 @@ const MobileProfileNav = () => {
                 </button>
               </div>
               <ul onClick={() => dispatch(toggleProfileNav())} className="mt-2">
+                {currentUser?.role === 'admin' && (
+                  <motion.li variants={item}>
+                    <Link
+                      href="/admin"
+                      className={`${
+                        pathname.startsWith('/admin') ? "text-primary bg-accent" : ""
+                      } flex gap-3 items-center cursor-pointer w-full py-2 px-4 hover:bg-accent text-primary font-semibold`}
+                    >
+                      <span className="text-xl"><FiShield /></span>
+                      <span>Admin Dashboard</span>
+                    </Link>
+                  </motion.li>
+                )}
                 {profileLinks.map((link) => (
                   <motion.li variants={item} key={link.title}>
                     <Link

@@ -1,6 +1,6 @@
 import Logo from "@/assets/Logo";
 import Link from "next/link";
-import { FaGithub, FaLinkedinIn, FaTwitter } from "react-icons/fa";
+import { FaGithub, FaLinkedinIn, FaFacebook } from "react-icons/fa";
 import { IoMdSend } from "react-icons/io";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
@@ -31,15 +31,17 @@ const Footer = () => {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mt-10 gap-14">
           <div>
-            <Logo />
+            <Link href="/" className="inline-block">
+              <Logo />
+            </Link>
             <div className="dark:text-gray-400">
               <p className="mt-6">Sousse, Tunisia</p>
 
-              <a href="mailto:iemafzalhassan@gmail.com" className="block mt-3">
-                iemafzalhassan@gmail.com
+              <a href="mailto:sioudzeineb08@gmail.com" className="block mt-3">
+                sioudzeineb08@gmail.com
               </a>
-              <a href="tel:+91 9400344657" className="block mt-1">
-                +91 9400344657
+              <a href="tel:+216 97999501" className="block mt-1">
+                +216 97999501
               </a>
 
               <div className="flex flex-wrap gap-3 items-center mt-4">
@@ -49,7 +51,7 @@ const Footer = () => {
                   asChild
                 >
                   <a
-                    href="https://github.com/iemafzalhassan"
+                    href="https://github.com/zeineb08"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
@@ -62,11 +64,11 @@ const Footer = () => {
                   asChild
                 >
                   <a
-                    href="https://twitter.com/iemafzalhassan"
+                    href="https://www.facebook.com/z.sioud"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    <FaTwitter />
+                    <FaFacebook />
                   </a>
                 </Button>
                 <Button
@@ -75,7 +77,7 @@ const Footer = () => {
                   asChild
                 >
                   <a
-                    href="https://www.linkedin.com/in/iemafzalhassan"
+                    href="https://www.linkedin.com/in/zeinebsioud/"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
@@ -210,12 +212,12 @@ const Footer = () => {
             </span>{" "}
             by{" "}
             <a
-              href="https://iemafzalhassan.tech"
+              href="https://zeinebsioud.tech"
               target="_blank"
               rel="noopener noreferrer"
               className="font-medium hover:text-primary transition-all duration-300 hover:underline decoration-primary decoration-2 underline-offset-4"
             >
-              Md. Afzal Hassan Ehsani
+              Zeineb Sioud
             </a>
           </div>
           

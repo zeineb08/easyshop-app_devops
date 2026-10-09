@@ -67,7 +67,7 @@ const links = [
   },
   {
     title: "Pages",
-    url: "",
+    url: "/pages",
     subLinks: [
       {
         title: "Profile",
@@ -83,7 +83,7 @@ const links = [
       },
       {
         title: "Orders",
-        url: "/orders",
+        url: "/profile/orders",
       },
     ],
   },
@@ -112,7 +112,9 @@ const MobileMenu = ({ isOpen, setIsOpen }: MobileMenuProps) => {
             className="menu relative z-50 w-full max-w-xs bg-secondary h-full overflow-auto"
           >
             <div className="header flex justify-between items-center px-5 py-4 border-b border-input">
-              <Logo />
+              <Link href="/" onClick={() => setIsOpen(false)} className="flex items-center">
+                <Logo />
+              </Link>
 
               <button
                 type="button"
@@ -130,26 +132,34 @@ const MobileMenu = ({ isOpen, setIsOpen }: MobileMenuProps) => {
               </li>
               {links.map((link) => (
                 <li key={link.title}>
-                  <Link
-                    className="flex justify-between items-center w-full px-4 py-2 transition-colors hover:text-primary hover:bg-accent"
-                    href={link.url}
-                    onClick={() => {
-                      if (link.subLinks) {
-                        setOpenDrop(!openDrop);
-                      } else {
-                        setIsOpen(false);
-                      }
-                    }}
-                  >
-                    <span>{link.title}</span>
+                  <div className="flex justify-between items-center w-full px-4 py-2 transition-colors hover:text-primary hover:bg-accent rounded-md">
+                    <Link
+                      href={link.url}
+                      className="flex-1"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      {link.title}
+                    </Link>
                     {link.subLinks && (
-                      <span
-                        className={`${openDrop ? "rotate-180" : "rotate-0"}`}
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setOpenDrop(!openDrop);
+                        }}
+                        className="p-1 hover:text-primary"
+                        aria-label="Toggle submenu"
                       >
-                        <IoChevronDownOutline />
-                      </span>
+                        <span
+                          className={`inline-block transition-transform duration-200 ${
+                            openDrop ? "rotate-180" : "rotate-0"
+                          }`}
+                        >
+                          <IoChevronDownOutline />
+                        </span>
+                      </button>
                     )}
-                  </Link>
+                  </div>
 
                   {link.subLinks && (
                     <ul
@@ -157,14 +167,14 @@ const MobileMenu = ({ isOpen, setIsOpen }: MobileMenuProps) => {
                         openDrop ? "max-h-[300px]" : "max-h-0"
                       } px-4 overflow-hidden transition-all duration-150`}
                     >
-                      {link.subLinks.map((link) => (
-                        <li key={link.url}>
+                      {link.subLinks.map((subLink) => (
+                        <li key={subLink.url}>
                           <Link
-                            href={link.url}
-                            className="block w-full transition-colors py-2 px-4 hover:text-primary hover:bg-accent"
+                            href={subLink.url}
+                            className="block w-full transition-colors py-2 px-4 hover:text-primary hover:bg-accent rounded-md"
                             onClick={() => setIsOpen(false)}
                           >
-                            {link.title}
+                            {subLink.title}
                           </Link>
                         </li>
                       ))}

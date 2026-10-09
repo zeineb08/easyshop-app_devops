@@ -6,12 +6,12 @@ import { requireAuth } from '@/lib/auth/utils';
 // Get single product
 export async function GET(
   request: NextRequest,
-  { params }: { params: { productId: string } }
+  { params }: { params: Promise<{ productId: string }> }
 ) {
   try {
     await dbConnect();
-    
-    const product = await Product.findOne({ originalId: params.productId });
+    const { productId } = await params;
+    const product = await Product.findOne({ originalId: productId });
     
     if (!product) {
       return NextResponse.json(
@@ -33,7 +33,7 @@ export async function GET(
 // Create single product
 export async function POST(
   request: NextRequest,
-  { params }: { params: { productId: string } }
+  { params }: { params: Promise<{ productId: string }> }
 ) {
   try {
     await dbConnect();
@@ -55,7 +55,7 @@ export async function POST(
 // Update product (admin only)
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { productId: string } }
+  { params }: { params: Promise<{ productId: string }> }
 ) {
   try {
     const auth = await requireAuth(request);
@@ -67,10 +67,11 @@ export async function PUT(
     }
     
     await dbConnect();
+    const { productId } = await params;
     const body = await request.json();
     
     const product = await Product.findOneAndUpdate(
-      { originalId: params.productId },
+      { originalId: productId },
       body,
       { new: true, runValidators: true }
     );
@@ -94,7 +95,7 @@ export async function PUT(
 // Delete product (admin only)
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { productId: string } }
+  { params }: { params: Promise<{ productId: string }> }
 ) {
   try {
     const auth = await requireAuth(request);
@@ -106,8 +107,8 @@ export async function DELETE(
     }
     
     await dbConnect();
-    
-    const product = await Product.findOneAndDelete({ originalId: params.productId });
+    const { productId } = await params;
+    const product = await Product.findOneAndDelete({ originalId: productId });
     if (!product) {
       return NextResponse.json(
         { error: 'Product not found' },

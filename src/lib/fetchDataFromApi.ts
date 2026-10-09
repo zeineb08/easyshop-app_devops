@@ -14,19 +14,26 @@ export const axiosInstance = axios.create({
   withCredentials: true, // Important for sending cookies
 });
 
+// Helper to safely get token on client side
+const getClientToken = (): string | null => {
+  if (typeof document === 'undefined') return null;
+  const cookies = document.cookie.split(';');
+  const tokenCookie = cookies.find((cookie) => cookie.trim().startsWith('token='));
+  if (!tokenCookie) return null;
+  try {
+    return decodeURIComponent(tokenCookie.split('=')[1].trim());
+  } catch {
+    return tokenCookie.split('=')[1].trim();
+  }
+};
+
 // Add request interceptor to include token from cookie
 axiosInstance.interceptors.request.use(
   async (config) => {
-    // Get token from cookie
-    const cookies = document.cookie.split(';');
-    const tokenCookie = cookies.find(cookie => cookie.trim().startsWith('token='));
-    const token = tokenCookie ? tokenCookie.split('=')[1] : null;
-
-    // If token exists, add it to headers
+    const token = getClientToken();
     if (token) {
       config.headers['Authorization'] = `Bearer ${token}`;
     }
-
     return config;
   },
   (error) => {
@@ -37,11 +44,7 @@ axiosInstance.interceptors.request.use(
 const fetchData = {
   get: async (url: string, params = {}) => {
     try {
-      // Get token from cookie
-      const cookies = document.cookie.split(';');
-      const tokenCookie = cookies.find(cookie => cookie.trim().startsWith('token='));
-      const token = tokenCookie ? decodeURIComponent(tokenCookie.split('=')[1].trim()) : null;
-
+      const token = getClientToken();
       const config = {
         params,
         headers: token ? { 'Authorization': `Bearer ${token}` } : {}
@@ -57,11 +60,7 @@ const fetchData = {
   },
   post: async (url: string, data = {}) => {
     try {
-      // Get token from cookie
-      const cookies = document.cookie.split(';');
-      const tokenCookie = cookies.find(cookie => cookie.trim().startsWith('token='));
-      const token = tokenCookie ? decodeURIComponent(tokenCookie.split('=')[1].trim()) : null;
-
+      const token = getClientToken();
       const config = {
         headers: token ? { 'Authorization': `Bearer ${token}` } : {}
       };

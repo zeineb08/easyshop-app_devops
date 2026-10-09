@@ -6,7 +6,9 @@ const LoginPage = () => {
   return (
     <div className="max-w-xl px-default mx-auto pt-12 pb-20">
       <div className="flex text-center flex-col items-center">
-        <Logo />
+        <Link href="/" className="inline-block">
+          <Logo />
+        </Link>
         <p className="my-3">Login with your email & password</p>
       </div>
       <LoginForm />

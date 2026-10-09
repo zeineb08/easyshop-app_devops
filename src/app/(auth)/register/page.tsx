@@ -6,7 +6,9 @@ const RegisterPage = () => {
   return (
     <div className="max-w-xl mx-auto pt-12 pb-20 px-default">
       <div className="flex text-center flex-col items-center">
-        <Logo />
+        <Link href="/" className="inline-block">
+          <Logo />
+        </Link>
         <p className="my-3">
           By signing up, you agree to our{" "}
           <Link href={"/"} className="text-primary hover:underline">

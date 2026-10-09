@@ -11,8 +11,9 @@ export async function GET(request: NextRequest) {
     const query: any = {};
     
     // Search by title or description
-    if (searchParams.has('search')) {
-      const searchRegex = new RegExp(searchParams.get('search') as string, 'i');
+    const searchVal = searchParams.get('search') || searchParams.get('q');
+    if (searchVal && searchVal.trim()) {
+      const searchRegex = new RegExp(searchVal.trim(), 'i');
       query.$or = [
         { title: searchRegex },
         { description: searchRegex }
@@ -20,24 +21,30 @@ export async function GET(request: NextRequest) {
     }
     
     // Filter by shop category
-    if (searchParams.has('shop_category')) {
-      query.shop_category = searchParams.get('shop_category');
+    const shopCategory = searchParams.get('shop_category');
+    if (shopCategory && shopCategory.trim()) {
+      query.shop_category = decodeURIComponent(shopCategory.trim());
     }
     
     // Filter by categories
-    if (searchParams.has('categories')) {
-      const categories = searchParams.get('categories')?.split(',') || [];
-      query.categories = { $in: categories };
+    const categoriesParam = searchParams.get('categories');
+    if (categoriesParam && categoriesParam.trim()) {
+      const categories = categoriesParam.split(',').map((c) => c.trim()).filter(Boolean);
+      if (categories.length > 0) {
+        query.categories = { $in: categories };
+      }
     }
 
     // Filter by price range
-    if (searchParams.has('minPrice') || searchParams.has('maxPrice')) {
+    const minPrice = searchParams.get('minPrice');
+    const maxPrice = searchParams.get('maxPrice');
+    if ((minPrice && !isNaN(parseFloat(minPrice))) || (maxPrice && !isNaN(parseFloat(maxPrice)))) {
       query.price = {};
-      if (searchParams.has('minPrice')) {
-        query.price.$gte = parseFloat(searchParams.get('minPrice') as string);
+      if (minPrice && !isNaN(parseFloat(minPrice))) {
+        query.price.$gte = parseFloat(minPrice);
       }
-      if (searchParams.has('maxPrice')) {
-        query.price.$lte = parseFloat(searchParams.get('maxPrice') as string);
+      if (maxPrice && !isNaN(parseFloat(maxPrice))) {
+        query.price.$lte = parseFloat(maxPrice);
       }
     }
 
@@ -48,9 +55,12 @@ export async function GET(request: NextRequest) {
 
     // Sorting
     let sort: any = { createdAt: -1 };
-    if (searchParams.has('sort')) {
-      const [field, order] = (searchParams.get('sort') as string).split(':');
-      sort = { [field]: order === 'desc' ? -1 : 1 };
+    const sortParam = searchParams.get('sort');
+    if (sortParam && sortParam.trim()) {
+      const [field, order] = sortParam.trim().split(':');
+      if (field) {
+        sort = { [field]: order === 'desc' ? -1 : 1 };
+      }
     }
 
     const products = await Product.find(query)

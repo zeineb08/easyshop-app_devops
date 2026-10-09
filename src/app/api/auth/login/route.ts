@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import mongoose from "mongoose";
 import User from "@/lib/models/user";
 import dbConnect from "@/lib/db";
 import { generateToken } from "@/lib/auth/utils";
@@ -9,8 +10,6 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const { email, password } = body;
 
-    console.log('Login attempt for:', email);
-
     // Find user and include password for comparison
     const user = await User.findOne({ email }).select("+password");
     if (!user) {
@@ -18,6 +17,15 @@ export async function POST(request: NextRequest) {
       return NextResponse.json(
         { error: "Invalid credentials" },
         { status: 401 }
+      );
+    }
+
+    // Check if user is active
+    if (user.isActive === false) {
+      console.log('Account deactivated:', email);
+      return NextResponse.json(
+        { error: "This account has been deactivated. Please contact support." },
+        { status: 403 }
       );
     }
 

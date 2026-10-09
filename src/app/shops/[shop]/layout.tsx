@@ -39,7 +39,9 @@ type ShopNames =
 
 type LayoutProps = Readonly<{
   children: React.ReactNode;
-  params: {
+  params: Promise<{
+    shop: string;
+  }> | {
     shop: string;
   };
 }>;
@@ -73,7 +75,7 @@ const layout = async ({ children, params }: LayoutProps) => {
             <SidebarOne />
             <div className="flex-1 max-w-full">
               <FilterNav
-                {...settings.filterOptions}
+                {...settings?.filterOptions}
                 sidebar={<SidebarOne isMobile={true} />}
               />
               <div className="pb-12 px-default">{children}</div>

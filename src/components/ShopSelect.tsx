@@ -28,18 +28,16 @@ const ShopSelect = () => {
   });
 
   const handleSelectShop = useCallback((shop?: string) => {
-    if (shop) {
+    if (shop && shop !== "Select Shop") {
       const foundShop = shops.find((s) => s.title === shop);
-      setSelectedShop(foundShop || { title: "Select Shop", icon: "" });
-      router.push(`/shops/${shop}`);
+      if (foundShop) {
+        setSelectedShop(foundShop);
+        router.push(`/shops/${shop}`);
+      }
     }
   }, [router]);
 
-  useEffect(() => {
-    if (selectedShop) {
-      handleSelectShop(selectedShop.title);
-    }
-  }, [selectedShop, handleSelectShop]);
+
 
   return (
     <DropdownMenu modal={false}>

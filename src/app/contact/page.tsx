@@ -1,7 +1,7 @@
 import ContactForm from "@/components/forms/ContactForm";
 import { Button } from "@/components/ui/button";
 import { Metadata } from "next";
-import { FaGithub, FaLinkedinIn, FaTwitter } from "react-icons/fa";
+import { FaGithub, FaLinkedinIn, FaFacebook } from "react-icons/fa";
 import Link from "next/link";
 
 export const metadata: Metadata = {
@@ -25,12 +25,12 @@ const ContactPage = () => {
 
           <div className="mt-4">
             <h4 className="font-semibold mb-1">Phone</h4>
-            <p className="text-sm text-muted-foreground">+91 9400344657</p>
+            <p className="text-sm text-muted-foreground">+216 97999501</p>
           </div>
 
           <div className="mt-4">
             <h4 className="font-semibold mb-1">Email Address</h4>
-            <p className="text-sm text-muted-foreground">iemafzalhassan@gmail.com</p>
+            <p className="text-sm text-muted-foreground">sioudzeineb08@gmail.com</p>
           </div>
           <div className="mt-4">
             <h3 className="font-semibold">Follow Me</h3>
@@ -41,7 +41,7 @@ const ContactPage = () => {
                 asChild
               >
                 <a
-                  href="https://github.com/iemafzalhassan"
+                  href="https://github.com/zeineb08"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -54,7 +54,7 @@ const ContactPage = () => {
                 asChild
               >
                 <a
-                  href="https://www.linkedin.com/in/iemafzalhassan"
+                  href="https://www.linkedin.com/in/zeinebsioud/"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -67,11 +67,11 @@ const ContactPage = () => {
                 asChild
               >
                 <a
-                  href="https://twitter.com/iemafzalhassan"
+                  href="https://www.facebook.com/z.sioud"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <FaTwitter />
+                  <FaFacebook />
                 </a>
               </Button>
             </div>

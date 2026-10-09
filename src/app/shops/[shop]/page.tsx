@@ -4,22 +4,31 @@ import ProductLoader from "@/components/loader/ProductLoader";
 import { Suspense } from "react";
 
 type ShopPageProps = {
-  searchParams: SearchParamsType;
-  params: {
+  searchParams: Promise<SearchParamsType> | SearchParamsType;
+  params: Promise<{
     shop: string;
-    category: string;
+    category?: string;
+  }> | {
+    shop: string;
+    category?: string;
   };
 };
 
-const ShopPage = ({ params, searchParams }: ShopPageProps) => {
+const ShopPage = async ({ params, searchParams }: ShopPageProps) => {
+  const resolvedParams = await params;
+  const resolvedSearchParams = await searchParams;
+
   return (
     <section className="shop-page">
       <SelectedFilters />
       <Suspense
-        key={searchParams?.page + params.shop + searchParams?.q}
+        key={String(resolvedSearchParams?.page ?? "") + resolvedParams?.shop + String(resolvedSearchParams?.q ?? "")}
         fallback={<ProductLoader />}
       >
-        <ProductGrid searchParams={searchParams} params={params} />
+        <ProductGrid
+          searchParams={resolvedSearchParams}
+          params={{ shop: resolvedParams?.shop, category: "" }}
+        />
       </Suspense>
     </section>
   );

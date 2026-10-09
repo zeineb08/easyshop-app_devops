@@ -36,7 +36,7 @@ const links = [
   },
   {
     title: "Pages",
-    url: "",
+    url: "/pages",
     subLinks: [
       {
         title: "Profile",
@@ -98,7 +98,9 @@ const Navbar = () => {
       <div className="navbar px-default py-3 bg-secondary shadow-lg border-b sticky top-0 left-0 z-50">
         <nav className="flex gap-6 items-center justify-between">
           <div className="left flex gap-6 items-center flex-1">
-            <Logo />
+            <Link href="/" className="flex items-center">
+              <Logo />
+            </Link>
 
             <div className="search flex-1 max-w-sm hidden md:block">
               <SearchBar />
@@ -124,13 +126,13 @@ const Navbar = () => {
                       </Link>
                       {link.subLinks && (
                         <ul className="invisible scale-95 translate-y-2 opacity-0 absolute top-[130%] right-0 w-[160px] border bg-card rounded-lg transition-all duration-150 shadow-lg p-0.5 group-hover:visible group-hover:scale-100 group-hover:translate-y-0 group-hover:opacity-100">
-                          {link.subLinks.map((link) => (
-                            <li key={link.url}>
+                          {link.subLinks.map((subLink) => (
+                            <li key={subLink.url}>
                               <Link
                                 className="block px-3 py-2 hover:bg-accent rounded-lg"
-                                href={link.url}
+                                href={subLink.url}
                               >
-                                {link.title}
+                                {subLink.title}
                               </Link>
                             </li>
                           ))}
@@ -159,22 +161,6 @@ const Navbar = () => {
             <div className="hidden lg:block">
               <ToggleTheme />
             </div>
-            <Button
-              variant="outline"
-              size="sm"
-              className="hidden md:flex items-center gap-2 hover:bg-primary hover:text-white"
-              asChild
-            >
-              <a
-                href="https://github.com/iemafzalhassan/EasyShop"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2"
-              >
-                <FaGithub className="text-lg" />
-                <span>Source Code</span>
-              </a>
-            </Button>
             {!isAuthenticated && (
               <Link href="/login">
                 <Button>Join</Button>

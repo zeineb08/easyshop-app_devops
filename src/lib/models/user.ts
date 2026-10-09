@@ -6,6 +6,7 @@ export interface IUser {
   email: string;
   password: string;
   role: 'user' | 'admin';
+  isActive: boolean;
   avatar?: string;
   addresses?: {
     street: string;
@@ -34,6 +35,10 @@ const userSchema = new mongoose.Schema<IUser>({
     required: [true, 'Please provide a password'],
     minlength: 8,
     select: false, // Don't include password in queries by default
+  },
+  isActive: {
+    type: Boolean,
+    default: true,
   },
   role: {
     type: String,
@@ -71,5 +76,9 @@ userSchema.pre('save', async function(next) {
 userSchema.methods.matchPassword = async function(enteredPassword: string) {
   return await bcrypt.compare(enteredPassword, this.password);
 };
+
+if (mongoose.models.User && !mongoose.models.User.schema.path('isActive')) {
+  delete mongoose.models.User;
+}
 
 export default mongoose.models.User || mongoose.model<IUser>('User', userSchema);

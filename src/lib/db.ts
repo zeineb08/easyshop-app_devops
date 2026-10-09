@@ -32,11 +32,25 @@ async function dbConnect() {
   if (!cached.promise) {
     const opts = {
       bufferCommands: false,
+      serverSelectionTimeoutMS: 2000,
     };
 
-    cached.promise = mongoose.connect(MONGODB_URI, opts).then((mongoose) => {
-      return mongoose;
-    });
+    cached.promise = mongoose
+      .connect(MONGODB_URI, opts)
+      .catch(async (err) => {
+        // If easyshop-mongodb fails to resolve on local development host, fallback to localhost
+        if (
+          MONGODB_URI.includes('easyshop-mongodb') &&
+          (err?.code === 'ENOTFOUND' || err?.message?.includes('ENOTFOUND'))
+        ) {
+          console.warn('easyshop-mongodb host not found, falling back to localhost:27017');
+          return mongoose.connect('mongodb://localhost:27017/easyshop', opts);
+        }
+        throw err;
+      })
+      .then((mongooseInstance) => {
+        return mongooseInstance;
+      });
   }
 
   try {

@@ -8,7 +8,8 @@ export async function createCookies(token: string) {
   // Log cookie creation
   console.log('Creating cookie with domain:', url.hostname);
   
-  cookies().set({
+  const cookieStore = await cookies();
+  cookieStore.set({
     name: "token",
     value: token,
     httpOnly: false, // Allow client-side access
@@ -21,15 +22,16 @@ export async function createCookies(token: string) {
 }
 
 export async function removeCookies() {
-  cookies().delete({
+  const cookieStore = await cookies();
+  cookieStore.delete({
     name: "token",
     path: "/",
   });
 }
 
 export async function getCookies(name: string) {
-  const cookieStore = cookies();
-  const cookie = await cookieStore.get(name);
+  const cookieStore = await cookies();
+  const cookie = cookieStore.get(name);
   return cookie;
 }
 

@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 
 const ProfilePage = async () => {
   // Get the token from cookies
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
   const token = cookieStore.get("token")?.value;
 
   // If no token, redirect to login

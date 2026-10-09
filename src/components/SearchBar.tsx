@@ -63,9 +63,7 @@ const SearchBarForm = ({
     }
   }, []);
 
-  useEffect(() => {
-    handleSelectShop(selectedShop);
-  }, [selectedShop, handleSelectShop]);
+
 
   useEffect(() => {
     handleSelectShop(undefined);

@@ -10,6 +10,7 @@ import MobileBottomMenu from "@/components/MobileBottomMenu";
 import { Toaster } from "@/components/ui/toaster";
 import ScrollToTopBtn from "@/components/ScrollToTopBtn";
 import { AuthProvider } from "@/components/providers/AuthProvider";
+import NavigationLoader from "@/components/loader/NavigationLoader";
 
 const roboto = Roboto({
   subsets: ["latin"],
@@ -27,7 +28,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className={roboto.className}>
         <StoreProvider>
           <ThemeProvider
@@ -37,6 +38,7 @@ export default function RootLayout({
             disableTransitionOnChange
           >
             <AuthProvider>
+              <NavigationLoader />
               <div className="flex min-h-screen flex-col">
                 <header>
                   <Navbar />

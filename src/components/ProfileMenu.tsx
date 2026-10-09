@@ -13,6 +13,8 @@ import { BsCartCheckFill } from "react-icons/bs";
 import { CgProfile } from "react-icons/cg";
 import { FaHeart } from "react-icons/fa";
 import { IoBagCheckOutline, IoLogOut } from "react-icons/io5";
+import { FiShield } from "react-icons/fi";
+import { useAppSelector } from "@/lib/hooks";
 
 const profileLinks = [
   {
@@ -42,6 +44,8 @@ type ProfileMenuProps = {
 };
 
 export function ProfileMenu({ setIsOpen }: ProfileMenuProps) {
+  const { currentUser } = useAppSelector((state) => state.authSlice);
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -55,6 +59,18 @@ export function ProfileMenu({ setIsOpen }: ProfileMenuProps) {
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56" align="end">
         <ul>
+          {currentUser?.role === 'admin' && (
+            <li>
+              <Link href="/admin">
+                <DropdownMenuItem className="flex gap-3 items-center cursor-pointer w-full py-2 px-4 text-primary font-semibold">
+                  <span className="text-xl">
+                    <FiShield />
+                  </span>
+                  <span>Admin Dashboard</span>
+                </DropdownMenuItem>
+              </Link>
+            </li>
+          )}
           {profileLinks.map((link) => (
             <li key={link.title}>
               <Link href={link.url}>
